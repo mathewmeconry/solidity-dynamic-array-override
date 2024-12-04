@@ -7,12 +7,7 @@ import {Wallet1} from "../src/Wallet1.sol";
 
 contract ReentrancyTest {
     function reenter() public {
-        (bool success, ) = msg.sender.call(
-            abi.encodeWithSelector(
-                Wallet1.changeOwner1da7b.selector,
-                address(this)
-            )
-        );
+        (bool success,) = msg.sender.call(abi.encodeWithSelector(Wallet1.changeOwner1da7b.selector, address(this)));
         require(success);
     }
 
@@ -37,16 +32,8 @@ contract TestSetupWallet1 is Test {
     }
 
     function testInitialState() public {
-        assertEq(
-            proxyWallet.getOwner15569(),
-            address(owner),
-            "Owner should be contract deployer"
-        );
-        assertEq(
-            proxy.getImplementation1599d(),
-            address(wallet1),
-            "Implementation should be set correctly"
-        );
+        assertEq(proxyWallet.getOwner15569(), address(owner), "Owner should be contract deployer");
+        assertEq(proxy.getImplementation1599d(), address(wallet1), "Implementation should be set correctly");
     }
 
     function testReinitialize() public {
@@ -61,17 +48,10 @@ contract TestSetupWallet1 is Test {
         uint256 balanceBefore = fuzzyRecipient.balance;
         vm.broadcast(owner);
         proxyWallet.distribute38c1b(fuzzyRecipient);
-        assertEq(
-            fuzzyRecipient.balance,
-            balanceBefore + 0.5 ether,
-            "Recipient should receive 0.5 ether"
-        );
+        assertEq(fuzzyRecipient.balance, balanceBefore + 0.5 ether, "Recipient should receive 0.5 ether");
     }
 
-    function testShouldDistributeFail(
-        address fuzzyRecipient,
-        address fuzzySender
-    ) public {
+    function testShouldDistributeFail(address fuzzyRecipient, address fuzzySender) public {
         vm.assume(fuzzySender != owner);
         vm.broadcast(fuzzySender);
         vm.expectRevert(bytes("nope"));
@@ -81,17 +61,10 @@ contract TestSetupWallet1 is Test {
     function testShouldchangeOwner1da7b(address fuzzyNewOwner) public {
         vm.broadcast(owner);
         proxyWallet.changeOwner1da7b(fuzzyNewOwner);
-        assertEq(
-            proxyWallet.getOwner15569(),
-            fuzzyNewOwner,
-            "Owner should be changed to fuzzy address"
-        );
+        assertEq(proxyWallet.getOwner15569(), fuzzyNewOwner, "Owner should be changed to fuzzy address");
     }
 
-    function testShouldchangeOwner1da7bFail(
-        address fuzzyNewOwner,
-        address fuzzySender
-    ) public {
+    function testShouldchangeOwner1da7bFail(address fuzzyNewOwner, address fuzzySender) public {
         vm.assume(fuzzySender != owner);
         vm.broadcast(fuzzySender);
         vm.expectRevert(bytes("nope"));
@@ -103,10 +76,6 @@ contract TestSetupWallet1 is Test {
         vm.broadcast(owner);
         vm.expectRevert(bytes("Recipient should accept ether"));
         proxyWallet.distribute38c1b(payable(address(attacker)));
-        assertEq(
-            proxyWallet.getOwner15569(),
-            owner,
-            "Owner should be contract deployer"
-        );
+        assertEq(proxyWallet.getOwner15569(), owner, "Owner should be contract deployer");
     }
 }

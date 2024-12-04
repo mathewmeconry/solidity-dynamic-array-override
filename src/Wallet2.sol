@@ -18,7 +18,7 @@ contract Wallet2 {
     }
 
     function gift1a6e9(address recipient) public onlyOwner {
-        (bool success, ) = payable(recipient).call{value: 0.5 ether}("");
+        (bool success,) = payable(recipient).call{value: 0.5 ether}("");
         require(success, "Recipient should accept ether");
         emit Gifted(recipient);
     }

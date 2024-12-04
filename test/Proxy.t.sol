@@ -59,14 +59,14 @@ contract ProxyTest is Test {
     }
 
     // Test implementation change functionality
-    function testsetImplementation743aByAdmin() public {       
+    function testsetImplementation743aByAdmin() public {
         vm.prank(admin);
         proxy.setImplementation743a(implementation2);
         assertEq(proxy.getImplementation1599d(), implementation2, "Implementation should be updated");
     }
 
     // Test preventing non-admin from changing implementation
-    function testCannotsetImplementation743aByNonAdmin() public {       
+    function testCannotsetImplementation743aByNonAdmin() public {
         vm.prank(randomUser);
         vm.expectRevert(bytes("nope"));
         proxy.setImplementation743a(implementation2);
@@ -84,6 +84,7 @@ contract ProxyTest is Test {
         assertEq(proxiedImplementation.getValue(), 42, "Value should be set via delegatecall");
     }
     // Fuzz test for admin change
+
     function testFuzzsetAdmin17e0(address fuzzyNewAdmin) public {
         vm.prank(admin);
         proxy.setAdmin17e0(fuzzyNewAdmin);

@@ -35,15 +35,11 @@ contract Wallet1Test is Test {
 
     function testDistributeByOwner() public {
         uint256 recipientBalanceBefore = recipient.balance;
-        
+
         vm.broadcast(owner);
         wallet.distribute38c1b(recipient);
 
-        assertEq(
-            recipient.balance, 
-            recipientBalanceBefore + 0.5 ether, 
-            "Recipient should receive 0.5 ether"
-        );
+        assertEq(recipient.balance, recipientBalanceBefore + 0.5 ether, "Recipient should receive 0.5 ether");
     }
 
     function testCannotDistributeByNonOwner() public {
@@ -82,16 +78,12 @@ contract Wallet1Test is Test {
     // Receive function test
     function testReceive() public {
         uint256 walletBalanceBefore = address(wallet).balance;
-        
+
         vm.deal(randomUser, 1 ether);
         vm.prank(randomUser);
-        (bool success, ) = address(wallet).call{value: 0.5 ether}("");
-        
+        (bool success,) = address(wallet).call{value: 0.5 ether}("");
+
         assertTrue(success, "Recipient should accept ether");
-        assertEq(
-            address(wallet).balance, 
-            walletBalanceBefore + 0.5 ether, 
-            "Wallet balance should increase"
-        );
+        assertEq(address(wallet).balance, walletBalanceBefore + 0.5 ether, "Wallet balance should increase");
     }
 }

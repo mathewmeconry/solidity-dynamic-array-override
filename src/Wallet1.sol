@@ -7,7 +7,7 @@ contract Wallet1 {
     event Distributed(address recipient);
     event OwnerChanged(address newOwner);
 
-    modifier nonreentrant {
+    modifier nonreentrant() {
         assembly {
             if tload(0) { revert(0, 0) }
             tstore(0, 1)
@@ -31,7 +31,7 @@ contract Wallet1 {
     }
 
     function distribute38c1b(address recipient) public onlyOwner nonreentrant {
-        (bool success, ) = payable(recipient).call{value: 0.5 ether}("");
+        (bool success,) = payable(recipient).call{value: 0.5 ether}("");
         require(success, "Recipient should accept ether");
         emit Distributed(recipient);
     }

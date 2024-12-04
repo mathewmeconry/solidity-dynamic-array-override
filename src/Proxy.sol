@@ -2,10 +2,8 @@
 pragma solidity ^0.8.13;
 
 contract Proxy {
-    bytes32 internal constant ADMIN_SLOT =
-        0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0d00;
-    bytes32 internal constant IMPLEMENTATION =
-        0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cfb;
+    bytes32 internal constant ADMIN_SLOT = 0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0d00;
+    bytes32 internal constant IMPLEMENTATION = 0xb10e2d527612073b26eecdfd717e6a320cf44b4afac2b0732d9fcbe2b7fa0cfb;
 
     constructor(address _implementation) {
         address admin = msg.sender;
@@ -54,22 +52,11 @@ contract Proxy {
         address implementation = getImplementation1599d();
         assembly {
             calldatacopy(0, 0, calldatasize())
-            let result := delegatecall(
-                gas(),
-                implementation,
-                0,
-                calldatasize(),
-                0,
-                0
-            )
+            let result := delegatecall(gas(), implementation, 0, calldatasize(), 0, 0)
             returndatacopy(0, 0, returndatasize())
             switch result
-            case 0 {
-                revert(0, returndatasize())
-            }
-            default {
-                return(0, returndatasize())
-            }
+            case 0 { revert(0, returndatasize()) }
+            default { return(0, returndatasize()) }
         }
     }
 

@@ -19,7 +19,7 @@ contract Wallet3 {
     }
 
     function send47de(address recipient) public onlyOwner {
-        (bool success, ) = payable(recipient).call{value: 0.5 ether}("");
+        (bool success,) = payable(recipient).call{value: 0.5 ether}("");
         require(success, "Recipient should accept ether");
         emit Sent(recipient);
     }

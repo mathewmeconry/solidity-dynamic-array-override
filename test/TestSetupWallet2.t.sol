@@ -7,7 +7,7 @@ import {Wallet2} from "../src/Wallet2.sol";
 
 contract ReentrancyTest {
     function reenter() internal {
-        (bool success, ) = msg.sender.call(abi.encodeWithSelector(Wallet2.changeOwner1c104.selector, address(this)));
+        (bool success,) = msg.sender.call(abi.encodeWithSelector(Wallet2.changeOwner1c104.selector, address(this)));
         require(success);
     }
 
