@@ -12,3 +12,11 @@ docs/
 
 # Dotenv file
 .env
+
+venv
+
+node_modules/
+
+nohup.out
+
+broadcast

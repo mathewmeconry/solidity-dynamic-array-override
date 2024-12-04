@@ -1,66 +1,23 @@
-## Foundry
+# Santa's Proxy Puzzle: A Blockchain Chimney Challenge
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+## Description to be used in Challenge
+Unwrap a festive smart contract vulnerability where memory regions become your playground and holiday cheer meets digital mischief. Ho ho ho... or is it hax hax hax?
+Vulnerability Description
 
-Foundry consists of:
+## Technical Details
+The challenge exploits a critical vulnerability in an Ethereum proxy contract through strategic storage manipulation:
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Proxy contract stores implementation and admin addresses in special sotrage slots.
+The `Wallet3.sol` contract contains a dynamic bytes32 array positioned near these critical storage slots.
+Reentrancy attack vector allows overwriting the implementation address adding notes to the `Wallet3.sol` contract and override the implementation address in the proxy.
+This allows an attacker to take over the proxy contract completely and drain it.
 
-## Documentation
+To see an example exploit look at the `Attacker.sol` contract.
 
-https://book.getfoundry.sh/
+To make it a little harder Santa switches the used Wallet implementation between every 10 and 40 seconds to the next in line.
 
-## Usage
+## Setup
+Just build and run the docker container with port 8080 exposed.
 
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+## Disclaimer
+Educational purpose only. Do not use on mainnet.

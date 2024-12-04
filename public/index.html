@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>🎄 Crypto Christmas Challenge 🎄</title>
+    <style>
+      body {
+        background: linear-gradient(to bottom, #1a1a2e, #16213e);
+        color: #e9e9e9;
+        text-align: center;
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+      .container {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 25px;
+        padding: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        max-width: 1000px;
+        width: 100%;
+        border: 2px solid #ff6b6b;
+        position: relative;
+      }
+      h1 {
+        color: #ff6b6b;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin-bottom: 30px;
+      }
+      .challenge-info {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-radius: 15px;
+        padding: 25px;
+        margin: 20px 0;
+      }
+      .validate-btn {
+        background-color: #ff6b6b;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .story-text {
+        text-align: left;
+        margin-bottom: 20px;
+        font-size: 18px;
+      }
+      .snowflake {
+        position: absolute;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      input#address {
+        width: 80%;
+        padding: 12px;
+        border: 2px solid #ff6b6b;
+        border-radius: 10px;
+        font-size: 16px;
+        color: #e9e9e9;
+        background-color: rgba(0, 0, 0, 0.5);
+        margin-top: 10px;
+        margin-bottom: 20px;
+        outline: none;
+        transition: box-shadow 0.3s ease, border-color 0.3s ease;
+      }
+
+      input#address:focus {
+        border-color: #ffa07a;
+        box-shadow: 0 0 10px #ffa07a;
+      }
+    </style>
+    <script>
+      function validateChallenge() {
+        fetch("/validate")
+          .then(async (data) => {
+            document.getElementById("response").style.display = "block";
+            document.getElementById("response").innerHTML = await data.text();
+          })
+          .catch((err) => {
+            document.getElementById("response").style.display = "block";
+            document.getElementById("response").innerHTML = err;
+          });
+      }
+
+      function getFunds() {
+        const address = document.getElementById("address").value;
+        fetch("/get-funds", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ address }),
+        })
+          .then(async (data) => {
+            document.getElementById("response").style.display = "block";
+            document.getElementById("response").innerHTML = await data.text();
+          })
+          .catch((err) => {
+            document.getElementById("response").style.display = "block";
+            document.getElementById("response").innerHTML = err;
+          });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🎅 Crypto Christmas Challenge 🎁</h1>
+
+      <div class="challenge-info">
+        <div class="story-text">
+          <p>
+            🎄 Ho ho ho! Santa's feeling generous! To kickstart your festive
+            challenge, he's gifted you a shiny new wallet loaded with 300 ETH -
+            what a Christmas miracle! 🤯
+          </p>
+
+          <p>
+            While you're settling in, Santa's been spreading some holiday cheer
+            - distributing 0.5 ETH to wallets that need a
+            little Christmas magic. 🎁
+          </p>
+
+          <p>
+            To keep things extra secure this holiday season, Santa recruited 3
+            of his most tech-savvy elves to create special wallet
+            implementations. They're switching things up faster than Santa
+            changes his route on Christmas Eve! 🧝‍♂️🔒
+          </p>
+
+          <p>
+            Your mission, should you choose to accept it: Can you find a way
+            to... take over the admin access from Santa's magical digital
+            sleigh? 🕵️‍♂️❄️
+          </p>
+        </div>
+
+        <h3>Wallet Locations</h3>
+        <p>🧝 Wallet 1: {{WALLET1}}</p>
+        <p>🧝 Wallet 2: {{WALLET2}}</p>
+        <p>🧝 Wallet 3: {{WALLET3}}</p>
+        <p>🛡️ Proxy: {{PROXY}}</p>
+
+        <h3>Your Private Key</h3>
+        <p>
+          0xbae59a37d25cba3c346674ed6ce224d9eb3b88ad081774961769f9c94a3ce969
+        </p>
+
+        <h3>Receive gift</h3>
+        <p><input id="address" /></p>
+        <p>
+          <button class="validate-btn" onclick="getFunds()">
+            Get funds 🎁
+          </button>
+        </p>
+      </div>
+
+      <button class="validate-btn" onclick="validateChallenge()">
+        Validate Challenge 🕵️‍♂️
+      </button>
+      <div id="response" class="challenge-info" style="display: none"></div>
+    </div>
+
+    <script>
+      function createSnowflakes() {
+        const container = document.body;
+        for (let i = 0; i < 50; i++) {
+          const snowflake = document.createElement("div");
+          snowflake.classList.add("snowflake");
+          snowflake.style.left = Math.random() * 100 + "vw";
+          snowflake.style.top = Math.random() * 100 + "vh";
+          snowflake.style.animationDuration = Math.random() * 10 + 5 + "s";
+          snowflake.style.width = Math.random() * 3 + 1 + "px";
+          snowflake.style.height = snowflake.style.width;
+          snowflake.style.animationName = "fall";
+          snowflake.style.animationTimingFunction = "linear";
+          snowflake.style.animationIterationCount = "infinite";
+          container.appendChild(snowflake);
+        }
+      }
+
+      const style = document.createElement("style");
+      style.innerHTML = `
+            @keyframes fall {
+                to { transform: translateY(100vh) rotate(360deg); }
+            }
+        `;
+      document.head.appendChild(style);
+
+      createSnowflakes();
+    </script>
+  </body>
+</html>
