@@ -1,4 +1,5 @@
 
+forge script --chain sepolia --rpc-url http://127.0.0.1:8080/rpc --broadcast -vvvv script/DeployAttack.s.sol
 target_active="0x000000000000000000000000e5ed47bcc12028b9be183a80b8821119e9397ef7"
 while [ 1 -eq 1 ]
 do
