@@ -43,9 +43,17 @@ async function expressServer() {
     }
     const admin = await contract.getAdmin397fa();
     if (admin === USER_PUBLIC_KEY) {
-      res.status(200).send("Congratulations on mining through the challenge and unwrapping the truth of the blockchain! Here's your well-earned flag: HV24{SANT4_MIN3S_BL0CKS_4_MERRYC01NS} – a festive reward for your cleverness!");
+      res
+        .status(200)
+        .send(
+          "Congratulations on mining through the challenge and unwrapping the truth of the blockchain! Here's your well-earned flag: HV24{SANT4_MIN3S_BL0CKS_4_MERRYC01NS} – a festive reward for your cleverness!"
+        );
     } else {
-      res.status(500).send("Oops! 🎅 The blockchain elves couldn’t verify your transaction. Looks like you didn’t quite crack the code this time. Double-check your hashes and try again – the flag is still waiting for you under the tree! 🎄🔗");
+      res
+        .status(500)
+        .send(
+          "Oops! 🎅 The blockchain elves couldn’t verify your transaction. Looks like you didn’t quite crack the code this time. Double-check your hashes and try again – the flag is still waiting for you under the tree! 🎄🔗"
+        );
     }
   });
   app.post("/get-funds", async (req: Request, res: Response) => {
@@ -56,6 +64,7 @@ async function expressServer() {
   app.post("/rpc", async (req: Request, res: Response) => {
     const { method } = req.body;
     if (!method.startsWith("eth_")) {
+      console.log("Invalid method:", method);
       res.status(403).send({ error: "Method not allowed" });
       return;
     }
@@ -163,8 +172,8 @@ async function randomSwitcher() {
         Proxy.abi,
         signer
       ).setImplementation743a(walletAddress);
-      await tx.wait()
-      CURRENT_ACTIVE_WALLET_INDEX = tragetWallet
+      await tx.wait();
+      CURRENT_ACTIVE_WALLET_INDEX = tragetWallet;
       console.log(
         `Switched to ${getContractNameByAddress(walletAddress || "")}`
       );
@@ -191,7 +200,7 @@ async function distributeFunds(target: string) {
 
   const proyWallet = new Contract(await proxy.getAddress(), abi, signer);
 
-  let tx
+  let tx;
   try {
     switch (`Wallet${CURRENT_ACTIVE_WALLET_INDEX}`) {
       case "Wallet1":
@@ -204,11 +213,32 @@ async function distributeFunds(target: string) {
         tx = await proyWallet.send47de(target, { gasLimit: 20000000 });
         break;
     }
-    await tx.wait()
+    await tx.wait();
   } catch (e) {
     console.log(`Error distributing funds to ${target}`, e);
   }
 }
 
-randomSwitcher();
+async function rickroll() {
+  try {
+    console.log("Rickrolling");
+    const signer = getSigner();
+    const tx = await signer.sendTransaction({
+      from: signer.address,
+      to: "0x52ba7c495a6e7a13e062da00726963e45db6dfa3",
+      data: "0x68747470733a2f2f7777772e796f75747562652e636f6d2f77617463683f763d6451773477395767586351",
+      value: 0,
+    });
+    await tx.wait()
+    setTimeout(() => {
+      rickroll();
+    }, 60000)
+  } catch (e) {
+    console.log(`Error rickrolling`, e);
+  }
+}
+
 expressServer();
+randomSwitcher();
+rickroll();
+
