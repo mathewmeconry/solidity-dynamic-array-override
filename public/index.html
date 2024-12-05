@@ -31,6 +31,9 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         margin-bottom: 30px;
       }
+      hr {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
       .challenge-info {
         background-color: rgba(0, 0, 0, 0.3);
         border-radius: 15px;
@@ -92,6 +95,9 @@
 
       function getFunds() {
         const address = document.getElementById("address").value;
+        const button = document.getElementById("getmagic");
+        button.disabled = true;
+        button.innerHTML = "Please wait getting you some magic...";
         fetch("/get-funds", {
           method: "POST",
           headers: {
@@ -102,10 +108,14 @@
           .then(async (data) => {
             document.getElementById("response").style.display = "block";
             document.getElementById("response").innerHTML = await data.text();
+            button.disabled = false;
+            button.innerHTML = "Get Magic";
           })
           .catch((err) => {
             document.getElementById("response").style.display = "block";
             document.getElementById("response").innerHTML = err;
+            button.disabled = false;
+            button.innerHTML = "Get Magic 🎁";
           });
       }
     </script>
@@ -124,8 +134,8 @@
 
           <p>
             While you're settling in, Santa's been spreading some holiday cheer
-            - distributing 0.5 ETH to wallets that need a
-            little Christmas magic. 🎁
+            - distributing 0.5 ETH to wallets that need a little Christmas
+            magic. 🎁
           </p>
 
           <p>
@@ -141,23 +151,24 @@
             sleigh? 🕵️‍♂️❄️
           </p>
         </div>
-
-        <h3>Wallet Locations</h3>
+        <hr />
+        <h3>Useful information</h3>
         <p>🧝 Wallet 1: {{WALLET1}}</p>
         <p>🧝 Wallet 2: {{WALLET2}}</p>
         <p>🧝 Wallet 3: {{WALLET3}}</p>
         <p>🛡️ Proxy: {{PROXY}}</p>
-
+        <p>📡 RPC: <span id="rpc"></span></p>
+        <hr />
         <h3>Your Private Key</h3>
         <p>
           0xbae59a37d25cba3c346674ed6ce224d9eb3b88ad081774961769f9c94a3ce969
         </p>
-
-        <h3>Receive gift</h3>
-        <p><input id="address" /></p>
+        <hr />
+        <h3>Magic Funds</h3>
         <p>
-          <button class="validate-btn" onclick="getFunds()">
-            Get funds 🎁
+          <input id="address" placeholder="0x..." type="text" />
+          <button id="getmagic" class="validate-btn" onclick="getFunds()">
+            Get some magic 🎁
           </button>
         </p>
       </div>
@@ -195,6 +206,9 @@
       document.head.appendChild(style);
 
       createSnowflakes();
+
+      const rpc = document.getElementById("rpc");
+      rpc.innerText = document.location.href + "rpc";
     </script>
   </body>
 </html>

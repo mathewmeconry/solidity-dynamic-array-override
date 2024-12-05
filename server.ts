@@ -43,9 +43,9 @@ async function expressServer() {
     }
     const admin = await contract.getAdmin397fa();
     if (admin === USER_PUBLIC_KEY) {
-      res.status(200).send("Nice");
+      res.status(200).send("Congratulations on mining through the challenge and unwrapping the truth of the blockchain! Here's your well-earned flag: HV24{SANT4_MIN3S_BL0CKS_4_MERRYC01NS} – a festive reward for your cleverness!");
     } else {
-      res.status(500).send("Nope!");
+      res.status(500).send("Oops! 🎅 The blockchain elves couldn’t verify your transaction. Looks like you didn’t quite crack the code this time. Double-check your hashes and try again – the flag is still waiting for you under the tree! 🎄🔗");
     }
   });
   app.post("/get-funds", async (req: Request, res: Response) => {
