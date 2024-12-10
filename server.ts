@@ -63,7 +63,7 @@ async function expressServer() {
   });
   app.post("/rpc", async (req: Request, res: Response) => {
     const { method } = req.body;
-    if (!method.startsWith("eth_")) {
+    if (!method.startsWith("eth_") && method == "net_version") {
       console.log("Invalid method:", method);
       res.status(403).send({ error: "Method not allowed" });
       return;
