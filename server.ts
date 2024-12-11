@@ -35,7 +35,7 @@ async function expressServer() {
   app.get("/index.html", (req: Request, res: Response) => {
     res.send(finalIndexPage);
   });
-  app.get("/validate", async (req: Request, res: Response) => {
+  app.post("/validate", async (req: Request, res: Response) => {
     const contract = getContract("Proxy");
     if (!contract) {
       res.status(500).send("Contract not found");
@@ -50,7 +50,7 @@ async function expressServer() {
         );
     } else {
       res
-        .status(500)
+        .status(200)
         .send(
           "Oops! 🎅 The blockchain elves couldn’t verify your transaction. Looks like you didn’t quite crack the code this time. Double-check your hashes and try again – the flag is still waiting for you under the tree! 🎄🔗"
         );

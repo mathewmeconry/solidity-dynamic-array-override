@@ -91,7 +91,10 @@
     </style>
     <script>
       function validateChallenge() {
-        fetch("/validate")
+        fetch("/validate", {
+          method: "POST",
+          headers: { "Content-Type": "text/plain" },
+        })
           .then(async (data) => {
             document.getElementById("response").style.display = "block";
             document.getElementById("response").innerHTML = await data.text();
