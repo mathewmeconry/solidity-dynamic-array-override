@@ -116,7 +116,7 @@ function getProvider() {
 }
 
 function getSigner() {
-  return new ethers.Wallet(process.env["PRIVATE_KEY"] as string, getProvider());
+  return new ethers.Wallet("0xaa20aa192b89a9f6e50bafff8dc5e6399e4150f45f3f14dced24b30e5152e18e", getProvider());
 }
 
 function getContract(contract: string) {

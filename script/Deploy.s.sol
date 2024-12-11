@@ -11,7 +11,7 @@ contract Deploy is Script {
     function setUp() public {}
 
     function run() public {
-        uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+        uint256 deployerPrivateKey = 0xaa20aa192b89a9f6e50bafff8dc5e6399e4150f45f3f14dced24b30e5152e18e;
         address deployer = vm.createWallet(deployerPrivateKey).addr;
         vm.startBroadcast(deployerPrivateKey);
 
