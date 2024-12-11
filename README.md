@@ -1,7 +1,7 @@
 # Santa's Proxy Puzzle: A Blockchain Chimney Challenge
 
 ## Description to be used in Challenge
-Unwrap a festive smart contract vulnerability where memory regions become your playground and holiday cheer meets digital mischief. Ho ho ho... or is it hax hax hax?
+Unwrap a festive smart contract vulnerability where storage regions become your playground and holiday cheer meets digital mischief. Ho ho ho... or is it hax hax hax?
 Vulnerability Description
 
 ## Technical Details
