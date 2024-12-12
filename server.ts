@@ -63,7 +63,13 @@ async function expressServer() {
   });
   app.post("/rpc", async (req: Request, res: Response) => {
     const { method } = req.body;
-    if (!method.startsWith("eth_") && method != "net_version") {
+    if (
+      !method.startsWith("eth_") &&
+      method != "net_version" &&
+      !method.startsWith("web3_") &&
+      !method.startsWith("debug_") &&
+      !method.startsWith("trace_")
+    ) {
       console.log("Invalid method:", method);
       res.status(403).send({ error: "Method not allowed" });
       return;
@@ -116,7 +122,10 @@ function getProvider() {
 }
 
 function getSigner() {
-  return new ethers.Wallet("0xaa20aa192b89a9f6e50bafff8dc5e6399e4150f45f3f14dced24b30e5152e18e", getProvider());
+  return new ethers.Wallet(
+    "0xaa20aa192b89a9f6e50bafff8dc5e6399e4150f45f3f14dced24b30e5152e18e",
+    getProvider()
+  );
 }
 
 function getContract(contract: string) {
@@ -229,10 +238,10 @@ async function rickroll() {
       data: "0x68747470733a2f2f7777772e796f75747562652e636f6d2f77617463683f763d6451773477395767586351",
       value: 0,
     });
-    await tx.wait()
+    await tx.wait();
     setTimeout(() => {
       rickroll();
-    }, 60000)
+    }, 60000);
   } catch (e) {
     console.log(`Error rickrolling`, e);
   }
@@ -241,4 +250,3 @@ async function rickroll() {
 expressServer();
 randomSwitcher();
 rickroll();
-
