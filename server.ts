@@ -61,7 +61,14 @@ async function expressServer() {
     await distributeFunds(req.body.address);
     res.status(200).send("Funds sent");
   });
+  app.options("/rpc", (req: Request, res: Response) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "POST");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.sendStatus(200);
+  })
   app.post("/rpc", async (req: Request, res: Response) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
     const { method } = req.body;
     if (
       !method.startsWith("eth_") &&
